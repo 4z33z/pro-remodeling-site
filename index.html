@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pro Remodeling | Quality Construction & Renovation</title>
-  <meta name="description" content="Pro Remodeling — trusted local experts in home renovation, kitchen & bath remodels, and general construction. Get your free estimate today.">
+  <meta name="description" content="Pro Remodeling — trusted local experts in home renovation, kitchen & bath remodels, and Commercial Construction. Get your free estimate today.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
@@ -113,14 +113,12 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      /* Warm architectural gradient as a placeholder for a real photo later */
       background:
         radial-gradient(ellipse 120% 80% at 70% 40%, rgba(200,164,94,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 80% 60% at 20% 80%, rgba(200,164,94,0.04) 0%, transparent 50%),
         linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
     }
 
-    /* Subtle grid pattern overlay */
     .hero-bg::before {
       content: '';
       position: absolute;
@@ -131,7 +129,6 @@
       background-size: 60px 60px;
     }
 
-    /* Diagonal accent line */
     .hero-bg::after {
       content: '';
       position: absolute;
@@ -281,9 +278,9 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
@@ -295,6 +292,10 @@
       transition: border-color 0.4s, transform 0.3s;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
     }
     .service-card:hover {
       border-color: rgba(200,164,94,0.25);
@@ -327,6 +328,25 @@
       color: var(--muted);
       font-size: 0.9rem;
       line-height: 1.7;
+    }
+
+    .service-card .card-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .service-card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     /* ─── WHY US ─── */
@@ -475,6 +495,9 @@
       .hero-content { padding: 1.5rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .services, .why-us, .contact { padding: 5rem 1.5rem; }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -482,12 +505,13 @@
 
   <!-- NAVIGATION -->
   <nav id="navbar">
-    <a href="#" class="logo">PRO<span>.</span>REMODELING</a>
+    <a href="index.html" class="logo">PRO<span>.</span>REMODELING</a>
     <div class="nav-links" id="navLinks">
       <a href="#services">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <a href="tel:+15551234567" class="nav-cta">Call Now</a>
+      <a href="tel:+14693211585" class="nav-cta">Call Now</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -499,8 +523,8 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <div class="hero-tag">Dallas–Fort Worth Area</div>
-      <h1>Build It Right.<br>Build It <em>Beautiful.</em></h1>
-      <p class="hero-sub">Full-service remodeling and construction with an uncompromising commitment to craftsmanship, communication, and getting every detail right.</p>
+      <h1>Build It Right.<br>Build It <em>Professional.</em></h1>
+      <p class="hero-sub">Reliable remodeling and construction across DFW. We keep it on schedule, on budget, and done right the first time.</p>
       <div class="hero-buttons">
         <a href="#contact" class="btn-primary">Get a Free Estimate →</a>
         <a href="#services" class="btn-outline">Our Services</a>
@@ -512,37 +536,41 @@
   <section class="services" id="services">
     <div class="section-header reveal">
       <h2>What We Do</h2>
-      <p>From concept to completion, we handle every phase of your remodel with precision and care.</p>
+      <p>We handle every phase of your project from start to finish.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal">
+      <a href="projects.html#kitchen-remodels" class="service-card reveal">
         <span class="service-icon">🏠</span>
         <h3>Kitchen Remodels</h3>
-        <p>Complete kitchen transformations — custom cabinetry, countertops, flooring, lighting, and layouts designed around how you actually live.</p>
-      </div>
-      <div class="service-card reveal">
+        <p>Cabinets, countertops, flooring, lighting — the full kitchen, built to fit how you use it.</p>
+        <span class="card-arrow">View Projects →</span>
+      </a>
+      <a href="projects.html#bathroom_renovations" class="service-card reveal">
         <span class="service-icon">🛁</span>
         <h3>Bathroom Renovations</h3>
-        <p>From simple refreshes to full gut-renovations with custom tile, walk-in showers, and modern fixtures that elevate your daily routine.</p>
-      </div>
-      <div class="service-card reveal">
+        <p>Tile work, walk-in showers, vanities, fixtures. Simple refresh or full gut — we do both.</p>
+        <span class="card-arrow">View Projects →</span>
+      </a>
+      <a href="projects.html#full_home_remodels" class="service-card reveal">
         <span class="service-icon">🔨</span>
-        <h3>General Construction</h3>
-        <p>Additions, structural work, framing, drywall, and everything in between. If it involves building, we've got it covered.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🏗️</span>
         <h3>Full Home Remodels</h3>
-        <p>Whole-home renovations that reimagine your space top to bottom — managed under one roof so nothing falls through the cracks.</p>
-      </div>
+        <p>Complete renovations from the ground up. We handle everything from additions to structural work, framing, drywall, and more.</p>
+        <span class="card-arrow">View Projects →</span>
+      </a>
+      <a href="projects.html#general_construction" class="service-card reveal">
+        <span class="service-icon">🏗️</span>
+        <h3>Commercial Construction</h3>
+        <p>Large-scale commercial construction and renovation. From ground-up builds to full interior overhauls. We take on complex, high-scope projects and deliver them on schedule.</p>
+        <span class="card-arrow">View Projects →</span>
+      </a>
     </div>
   </section>
 
   <!-- WHY US / STATS -->
   <section class="why-us" id="about">
     <div class="section-header reveal">
-      <h2>Built on Trust</h2>
-      <p>Numbers that speak for themselves.</p>
+      <h2>About Us</h2>
+      <p>Over a decade of work with homeowners to commercial clients, we bring the same standard of quality to every job.</p>
     </div>
     <div class="stats-row reveal">
       <div class="stat">
@@ -564,21 +592,21 @@
   <section class="contact" id="contact">
     <div class="section-header reveal">
       <h2>Let's Talk</h2>
-      <p>Ready to start your project? Reach out — we'd love to hear from you.</p>
+      <p>Ready to get started? Reach out for a free estimate.</p>
     </div>
     <div class="contact-grid reveal">
       <div class="contact-item">
         <div class="contact-icon">📞</div>
         <div>
           <h4>Phone</h4>
-          <p><a href="tel:+15551234567">(555) 123-4567</a></p>
+          <p><a href="tel:+14693211585">(469) 321-1585</a></p>
         </div>
       </div>
       <div class="contact-item">
         <div class="contact-icon">✉️</div>
         <div>
           <h4>Email</h4>
-          <p><a href="mailto:info@proremod.com">info@proremod.com</a></p>
+          <p><a href="mailto:hrasool.tcr@gmail.com">hrasool.tcr@gmail.com</a></p>
         </div>
       </div>
       <div class="contact-item">
@@ -593,7 +621,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Pro Remodeling. All rights reserved. | <a href="tel:+15551234567">(555) 123-4567</a></p>
+    <p>&copy; 2026 Pro Remodeling. All rights reserved. | <a href="tel:+14693211585">(469) 321-1585</a></p>
   </footer>
 
   <script>
