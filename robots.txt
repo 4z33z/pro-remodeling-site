@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://proremod.com/sitemap.xml

@@ -3,11 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pro Remodeling | Quality Construction & Renovation</title>
-  <meta name="description" content="Pro Remodeling — trusted local experts in home renovation, kitchen & bath remodels, and Commercial Construction. Get your free estimate today.">
+  <title>Pro Remodeling | Kitchen, Bath & Home Renovation in Dallas–Fort Worth</title>
+  <meta name="description" content="Pro Remodeling — trusted DFW experts in kitchen remodels, bathroom renovations, full home remodels, and commercial construction. Licensed & insured. Free estimates. Call (469) 321-1585.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Pro Remodeling — Quality Construction & Renovation in DFW">
+  <meta property="og:description" content="Kitchen remodels, bathroom renovations, full home remodels, and commercial construction across Dallas–Fort Worth. 10+ years experience. Free estimates.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://proremod.com/">
+  <meta property="og:locale" content="en_US">
+  <link rel="canonical" href="https://proremod.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Prefetch projects page so it loads instantly when navigated to -->
+  <link rel="prefetch" href="projects.html">
+  <!-- Preload first project images at high priority so filmstrips are ready on arrival -->
+  <link rel="preload" href="media/projects/kitchen_remodels/01.webp" as="image" type="image/webp">
+  <link rel="preload" href="media/projects/kitchen_remodels/02.webp" as="image" type="image/webp">
+  <link rel="preload" href="media/projects/kitchen_remodels/03.webp" as="image" type="image/webp">
+  <link rel="preload" href="media/projects/kitchen_remodels/04.webp" as="image" type="image/webp">
+  <link rel="preload" href="media/projects/kitchen_remodels/05.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="media/projects/bathroom_remodels/01.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="media/projects/bathroom_remodels/02.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="media/projects/bathroom_remodels/03.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="media/projects/bathroom_remodels/04.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="media/projects/bathroom_remodels/05.webp" as="image" type="image/webp">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -632,6 +653,39 @@
     <p>&copy; 2026 Pro Remodeling. All rights reserved. | <a href="tel:+14693211585">(469) 321-1585</a></p>
   </footer>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Pro Remodeling",
+    "description": "Trusted DFW experts in kitchen remodels, bathroom renovations, full home remodels, and commercial construction.",
+    "url": "https://proremod.com",
+    "telephone": "+14693211585",
+    "email": "hrasool.tcr@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "4040 N Collins Street, Unit 146, Mail Box 208",
+      "addressLocality": "Arlington",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "name": "Dallas–Fort Worth Metroplex"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Remodeling Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Kitchen Remodels" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bathroom Renovations" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Home Remodels" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial Construction" } }
+      ]
+    }
+  }
+  </script>
+
   <script>
     // Navbar shrink on scroll
     window.addEventListener('scroll', () => {
@@ -660,6 +714,33 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── AGGRESSIVE IMAGE PREFETCH ───
+    // Start prefetching ALL project images as soon as index page loads.
+    // By the time the user clicks "Projects", most/all images are cached.
+    window.addEventListener('load', prefetchProjectImages);
+
+    function prefetchProjectImages() {
+      const images = [];
+      // Kitchen remodels: 6-24 (1-5 already preloaded via <link rel="preload">)
+      for (let i = 6; i <= 24; i++) {
+        images.push('media/projects/kitchen_remodels/' + String(i).padStart(2, '0') + '.webp');
+      }
+      // Bathroom remodels: 6-30 (1-5 already prefetched via <link rel="prefetch">)
+      for (let i = 6; i <= 30; i++) {
+        images.push('media/projects/bathroom_remodels/' + String(i).padStart(2, '0') + '.webp');
+      }
+
+      // Load them all quickly with minimal stagger (just enough to not block UI)
+      let delay = 0;
+      images.forEach(src => {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = src;
+        }, delay);
+        delay += 50;
+      });
+    }
   </script>
 
 </body>
