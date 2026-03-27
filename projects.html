@@ -33,7 +33,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── NAVIGATION (same as index) ─── */
+    /* ─── NAVIGATION ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -134,6 +134,8 @@
     .project-section {
       padding: 5rem 2.5rem;
       position: relative;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 600px;
     }
     .project-section:nth-child(even) {
       background: var(--charcoal);
@@ -163,170 +165,61 @@
       line-height: 1.6;
     }
 
-    /* ─── 1. KITCHEN — SLIDESHOW / CAROUSEL ─── */
-    .slideshow {
-      position: relative;
-      max-width: 800px;
+    /* ─── FILMSTRIP (shared layout for all sections) ─── */
+    .filmstrip-wrapper {
+      max-width: 1100px;
       margin: 0 auto;
+      position: relative;
+    }
+
+    .filmstrip {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.5rem 0 1.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) rgba(245,240,232,0.05);
+    }
+    .filmstrip::-webkit-scrollbar { height: 6px; }
+    .filmstrip::-webkit-scrollbar-track { background: rgba(245,240,232,0.05); border-radius: 3px; }
+    .filmstrip::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    .filmstrip-item {
+      flex: 0 0 auto;
+      width: 320px;
+      scroll-snap-align: start;
       border-radius: 8px;
       overflow: hidden;
-      background: rgba(245,240,232,0.03);
       border: 1px solid rgba(245,240,232,0.06);
+      background: rgba(245,240,232,0.03);
+      transition: border-color 0.3s;
+    }
+    .filmstrip-item:hover {
+      border-color: rgba(200,164,94,0.25);
+    }
+    .filmstrip-item {
+      cursor: pointer;
     }
 
-    .slideshow-track {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-
-    .slideshow-slide {
-      min-width: 100%;
-      position: relative;
-    }
-
-    .slideshow-slide img,
-    .slideshow-slide video {
+    .filmstrip-item img,
+    .filmstrip-item video {
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
       display: block;
+      background: var(--slate);
     }
 
-    .slideshow-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0; right: 0;
-      padding: 1.5rem 1.5rem 1.2rem;
-      background: linear-gradient(to top, rgba(13,13,13,0.85), transparent);
-      font-size: 0.85rem;
-      color: var(--cream);
+    .filmstrip-item .caption {
+      padding: 0.8rem 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
       font-weight: 500;
     }
 
-    .slideshow-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(13,13,13,0.6);
-      border: 1px solid rgba(200,164,94,0.2);
-      color: var(--cream);
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s, border-color 0.3s;
-      z-index: 2;
-    }
-    .slideshow-btn:hover {
-      background: rgba(200,164,94,0.2);
-      border-color: var(--gold);
-    }
-    .slideshow-btn.prev { left: 12px; }
-    .slideshow-btn.next { right: 12px; }
-
-    .slideshow-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 1rem 0;
-    }
-    .slideshow-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(245,240,232,0.2);
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .slideshow-dot.active {
-      background: var(--gold);
-    }
-
-    /* ─── 2. BATHROOM — MASONRY COLLAGE ─── */
-    .masonry {
-      max-width: 1000px;
-      margin: 0 auto;
-      columns: 3;
-      column-gap: 12px;
-    }
-
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 12px;
-      border-radius: 6px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .masonry-item img,
-    .masonry-item video {
-      width: 100%;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .masonry-item:hover img,
-    .masonry-item:hover video {
-      transform: scale(1.03);
-    }
-
-    .masonry-item .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(13,13,13,0.5);
-      display: flex;
-      align-items: flex-end;
-      padding: 1rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .masonry-item:hover .overlay { opacity: 1; }
-
-    .masonry-item .overlay span {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--cream);
-    }
-
-    /* ─── 3. FULL HOME — LIGHTBOX GRID ─── */
-    .lightbox-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .lightbox-thumb {
-      border-radius: 6px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      border: 1px solid rgba(245,240,232,0.06);
-      transition: border-color 0.3s;
-    }
-    .lightbox-thumb:hover {
-      border-color: rgba(200,164,94,0.3);
-    }
-
-    .lightbox-thumb img,
-    .lightbox-thumb video {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s;
-    }
-    .lightbox-thumb:hover img,
-    .lightbox-thumb:hover video {
-      transform: scale(1.05);
-    }
-
-    /* Lightbox overlay */
+    /* ─── LIGHTBOX ─── */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
@@ -336,11 +229,17 @@
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
-    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay.open {
+      display: flex;
+    }
+    .lightbox-overlay.visible {
+      opacity: 1;
+    }
 
-    .lightbox-overlay img,
-    .lightbox-overlay video {
+    .lightbox-overlay img {
       max-width: 90vw;
       max-height: 85vh;
       border-radius: 8px;
@@ -387,56 +286,6 @@
     .lightbox-nav.lb-prev { left: 1.5rem; }
     .lightbox-nav.lb-next { right: 1.5rem; }
 
-    /* ─── 4. COMMERCIAL CONSTRUCTION — HORIZONTAL FILMSTRIP ─── */
-    .filmstrip-wrapper {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .filmstrip {
-      display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 0.5rem 0 1.5rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) rgba(245,240,232,0.05);
-    }
-    .filmstrip::-webkit-scrollbar { height: 6px; }
-    .filmstrip::-webkit-scrollbar-track { background: rgba(245,240,232,0.05); border-radius: 3px; }
-    .filmstrip::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-
-    .filmstrip-item {
-      flex: 0 0 auto;
-      width: 320px;
-      scroll-snap-align: start;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid rgba(245,240,232,0.06);
-      background: rgba(245,240,232,0.03);
-      transition: border-color 0.3s;
-    }
-    .filmstrip-item:hover {
-      border-color: rgba(200,164,94,0.25);
-    }
-
-    .filmstrip-item img,
-    .filmstrip-item video {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      display: block;
-    }
-
-    .filmstrip-item .caption {
-      padding: 0.8rem 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
     /* ─── FOOTER ─── */
     footer {
       padding: 2.5rem;
@@ -482,12 +331,7 @@
         border-bottom: 1px solid rgba(200,164,94,0.1);
       }
       .project-section { padding: 4rem 1.5rem; }
-      .masonry { columns: 2; }
       .filmstrip-item { width: 260px; }
-    }
-
-    @media (max-width: 480px) {
-      .masonry { columns: 1; }
     }
   </style>
 </head>
@@ -515,7 +359,7 @@
   </header>
 
   <!-- ════════════════════════════════════════════════
-       1. KITCHEN REMODELS — SLIDESHOW
+       1. KITCHEN REMODELS
        ════════════════════════════════════════════════ -->
   <section class="project-section" id="kitchen-remodels">
     <div class="section-title reveal">
@@ -523,113 +367,38 @@
       <h2>Kitchen Remodels</h2>
       <p>Full kitchen builds — counters, cabinets, flooring, and lighting.</p>
     </div>
-    <div class="slideshow reveal" id="kitchenSlideshow">
-      <div class="slideshow-track" id="kitchenTrack">
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/01.png" alt="Kitchen remodel 01">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/02.png" alt="Kitchen remodel 02">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/03.png" alt="Kitchen remodel 03">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/04.png" alt="Kitchen remodel 04">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/05.png" alt="Kitchen remodel 05">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/06.png" alt="Kitchen remodel 06">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/07.png" alt="Kitchen remodel 07">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/08.png" alt="Kitchen remodel 08">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/09.png" alt="Kitchen remodel 09">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/10.png" alt="Kitchen remodel 10">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/11.png" alt="Kitchen remodel 11">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/12.png" alt="Kitchen remodel 12">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/13.png" alt="Kitchen remodel 13">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/14.png" alt="Kitchen remodel 14">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/15.png" alt="Kitchen remodel 15">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/16.png" alt="Kitchen remodel 16">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/17.png" alt="Kitchen remodel 17">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/18.png" alt="Kitchen remodel 18">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/19.png" alt="Kitchen remodel 19">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/20.png" alt="Kitchen remodel 20">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/21.png" alt="Kitchen remodel 21">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/22.png" alt="Kitchen remodel 22">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/23.png" alt="Kitchen remodel 23">
-          <div class="slideshow-caption"></div>
-        </div>
-        <div class="slideshow-slide">
-          <img src="media/projects/kitchen_remodels/24.png" alt="Kitchen remodel 24">
-          <div class="slideshow-caption"></div>
-        </div>
+    <div class="filmstrip-wrapper reveal">
+      <div class="filmstrip">
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/01.webp" alt="Kitchen remodel 01" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/02.webp" alt="Kitchen remodel 02" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/03.webp" alt="Kitchen remodel 03" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/04.webp" alt="Kitchen remodel 04" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/05.webp" alt="Kitchen remodel 05" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/06.webp" alt="Kitchen remodel 06" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/07.webp" alt="Kitchen remodel 07" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/08.webp" alt="Kitchen remodel 08" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/09.webp" alt="Kitchen remodel 09" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/10.webp" alt="Kitchen remodel 10" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/11.webp" alt="Kitchen remodel 11" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/12.webp" alt="Kitchen remodel 12" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/13.webp" alt="Kitchen remodel 13" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/14.webp" alt="Kitchen remodel 14" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/15.webp" alt="Kitchen remodel 15" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/16.webp" alt="Kitchen remodel 16" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/17.webp" alt="Kitchen remodel 17" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/18.webp" alt="Kitchen remodel 18" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/19.webp" alt="Kitchen remodel 19" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/20.webp" alt="Kitchen remodel 20" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/21.webp" alt="Kitchen remodel 21" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/22.webp" alt="Kitchen remodel 22" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/23.webp" alt="Kitchen remodel 23" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/24.webp" alt="Kitchen remodel 24" decoding="async"><div class="caption"></div></div>
       </div>
-      <button class="slideshow-btn prev" onclick="slideKitchen(-1)">‹</button>
-      <button class="slideshow-btn next" onclick="slideKitchen(1)">›</button>
-      <div class="slideshow-dots" id="kitchenDots"></div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════
-       2. BATHROOM RENOVATIONS — MASONRY COLLAGE
+       2. BATHROOM RENOVATIONS
        ════════════════════════════════════════════════ -->
   <section class="project-section" id="bathroom_renovations">
     <div class="section-title reveal">
@@ -637,108 +406,38 @@
       <h2>Bathroom Renovations</h2>
       <p>Custom tile, showers, vanities, and full gut-renovations.</p>
     </div>
-    <div class="masonry reveal">
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/01.png" alt="Bathroom project 1">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/02.png" alt="Bathroom project 2">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/03.png" alt="Bathroom project 3">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/04.png" alt="Bathroom project 4">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/05.png" alt="Bathroom project 5">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/06.png" alt="Bathroom project 6">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/07.png" alt="Bathroom project 7">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/08.png" alt="Bathroom project 8">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/09.png" alt="Bathroom project 9">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/10.png" alt="Bathroom project 10">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/11.png" alt="Bathroom project 11">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/12.png" alt="Bathroom project 12">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/13.png" alt="Bathroom project 13">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/14.png" alt="Bathroom project 14">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/15.png" alt="Bathroom project 15">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/16.png" alt="Bathroom project 16">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/17.png" alt="Bathroom project 17">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/18.png" alt="Bathroom project 18">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/19.png" alt="Bathroom project 19">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/20.png" alt="Bathroom project 20">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/21.png" alt="Bathroom project 21">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/22.png" alt="Bathroom project 22">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/23.png" alt="Bathroom project 23">
-        <div class="overlay"><span></span></div>
-      </div>
-      <div class="masonry-item">
-        <img src="media/projects/kitchen_remodels/24.png" alt="Bathroom project 24">
-        <div class="overlay"><span></span></div>
+    <div class="filmstrip-wrapper reveal">
+      <div class="filmstrip">
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/01.webp" alt="Bathroom project 1" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/02.webp" alt="Bathroom project 2" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/03.webp" alt="Bathroom project 3" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/04.webp" alt="Bathroom project 4" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/05.webp" alt="Bathroom project 5" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/06.webp" alt="Bathroom project 6" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/07.webp" alt="Bathroom project 7" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/08.webp" alt="Bathroom project 8" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/09.webp" alt="Bathroom project 9" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/10.webp" alt="Bathroom project 10" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/11.webp" alt="Bathroom project 11" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/12.webp" alt="Bathroom project 12" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/13.webp" alt="Bathroom project 13" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/14.webp" alt="Bathroom project 14" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/15.webp" alt="Bathroom project 15" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/16.webp" alt="Bathroom project 16" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/17.webp" alt="Bathroom project 17" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/18.webp" alt="Bathroom project 18" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/19.webp" alt="Bathroom project 19" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/20.webp" alt="Bathroom project 20" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/21.webp" alt="Bathroom project 21" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/22.webp" alt="Bathroom project 22" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/23.webp" alt="Bathroom project 23" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/24.webp" alt="Bathroom project 24" decoding="async"><div class="caption"></div></div>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════
-       3. FULL HOME REMODELS — LIGHTBOX GRID
+       3. FULL HOME REMODELS
        ════════════════════════════════════════════════ -->
   <section class="project-section" id="full_home_remodels">
     <div class="section-title reveal">
@@ -746,92 +445,38 @@
       <h2>Full Home Remodels</h2>
       <p>Complete renovations, start to finish, under one crew.</p>
     </div>
-    <div class="lightbox-grid reveal" id="fullHomeGrid">
-      <div class="lightbox-thumb" onclick="openLightbox(0)">
-        <img src="media/projects/kitchen_remodels/01.png" alt="Full home project 1">
+    <div class="filmstrip-wrapper reveal">
+      <div class="filmstrip">
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/01.webp" alt="Full home project 1" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/02.webp" alt="Full home project 2" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/03.webp" alt="Full home project 3" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/04.webp" alt="Full home project 4" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/05.webp" alt="Full home project 5" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/06.webp" alt="Full home project 6" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/07.webp" alt="Full home project 7" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/08.webp" alt="Full home project 8" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/09.webp" alt="Full home project 9" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/10.webp" alt="Full home project 10" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/11.webp" alt="Full home project 11" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/12.webp" alt="Full home project 12" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/13.webp" alt="Full home project 13" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/14.webp" alt="Full home project 14" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/15.webp" alt="Full home project 15" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/16.webp" alt="Full home project 16" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/17.webp" alt="Full home project 17" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/18.webp" alt="Full home project 18" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/19.webp" alt="Full home project 19" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/20.webp" alt="Full home project 20" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/21.webp" alt="Full home project 21" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/22.webp" alt="Full home project 22" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/23.webp" alt="Full home project 23" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/24.webp" alt="Full home project 24" decoding="async"><div class="caption"></div></div>
       </div>
-      <div class="lightbox-thumb" onclick="openLightbox(1)">
-        <img src="media/projects/kitchen_remodels/02.png" alt="Full home project 2">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(2)">
-        <img src="media/projects/kitchen_remodels/03.png" alt="Full home project 3">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(3)">
-        <img src="media/projects/kitchen_remodels/04.png" alt="Full home project 4">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(4)">
-        <img src="media/projects/kitchen_remodels/05.png" alt="Full home project 5">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(5)">
-        <img src="media/projects/kitchen_remodels/06.png" alt="Full home project 6">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(6)">
-        <img src="media/projects/kitchen_remodels/07.png" alt="Full home project 7">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(7)">
-        <img src="media/projects/kitchen_remodels/08.png" alt="Full home project 8">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(8)">
-        <img src="media/projects/kitchen_remodels/09.png" alt="Full home project 9">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(9)">
-        <img src="media/projects/kitchen_remodels/10.png" alt="Full home project 10">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(10)">
-        <img src="media/projects/kitchen_remodels/11.png" alt="Full home project 11">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(11)">
-        <img src="media/projects/kitchen_remodels/12.png" alt="Full home project 12">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(12)">
-        <img src="media/projects/kitchen_remodels/13.png" alt="Full home project 13">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(13)">
-        <img src="media/projects/kitchen_remodels/14.png" alt="Full home project 14">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(14)">
-        <img src="media/projects/kitchen_remodels/15.png" alt="Full home project 15">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(15)">
-        <img src="media/projects/kitchen_remodels/16.png" alt="Full home project 16">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(16)">
-        <img src="media/projects/kitchen_remodels/17.png" alt="Full home project 17">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(17)">
-        <img src="media/projects/kitchen_remodels/18.png" alt="Full home project 18">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(18)">
-        <img src="media/projects/kitchen_remodels/19.png" alt="Full home project 19">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(19)">
-        <img src="media/projects/kitchen_remodels/20.png" alt="Full home project 20">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(20)">
-        <img src="media/projects/kitchen_remodels/21.png" alt="Full home project 21">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(21)">
-        <img src="media/projects/kitchen_remodels/22.png" alt="Full home project 22">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(22)">
-        <img src="media/projects/kitchen_remodels/23.png" alt="Full home project 23">
-      </div>
-      <div class="lightbox-thumb" onclick="openLightbox(23)">
-        <img src="media/projects/kitchen_remodels/24.png" alt="Full home project 24">
-      </div>
-    </div>
-
-    <!-- Lightbox Overlay -->
-    <div class="lightbox-overlay" id="lightbox">
-      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-      <button class="lightbox-nav lb-prev" onclick="navLightbox(-1)">‹</button>
-      <button class="lightbox-nav lb-next" onclick="navLightbox(1)">›</button>
-      <div id="lightboxContent"></div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════
-       4. COMMERCIAL CONSTRUCTION — HORIZONTAL FILMSTRIP
+       4. COMMERCIAL CONSTRUCTION
        ════════════════════════════════════════════════ -->
   <section class="project-section" id="general_construction">
     <div class="section-title reveal">
@@ -841,105 +486,41 @@
     </div>
     <div class="filmstrip-wrapper reveal">
       <div class="filmstrip">
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/01.png" alt="Construction project 1">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/02.png" alt="Construction project 2">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/03.png" alt="Construction project 3">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/04.png" alt="Construction project 4">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/05.png" alt="Construction project 5">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/06.png" alt="Construction project 6">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/07.png" alt="Construction project 7">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/08.png" alt="Construction project 8">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/09.png" alt="Construction project 9">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/10.png" alt="Construction project 10">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/11.png" alt="Construction project 11">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/12.png" alt="Construction project 12">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/13.png" alt="Construction project 13">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/14.png" alt="Construction project 14">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/15.png" alt="Construction project 15">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/16.png" alt="Construction project 16">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/17.png" alt="Construction project 17">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/18.png" alt="Construction project 18">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/19.png" alt="Construction project 19">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/20.png" alt="Construction project 20">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/21.png" alt="Construction project 21">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/22.png" alt="Construction project 22">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/23.png" alt="Construction project 23">
-          <div class="caption"></div>
-        </div>
-        <div class="filmstrip-item">
-          <img src="media/projects/kitchen_remodels/24.png" alt="Construction project 24">
-          <div class="caption"></div>
-        </div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/01.webp" alt="Construction project 1" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/02.webp" alt="Construction project 2" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/03.webp" alt="Construction project 3" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/04.webp" alt="Construction project 4" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/05.webp" alt="Construction project 5" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/06.webp" alt="Construction project 6" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/07.webp" alt="Construction project 7" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/08.webp" alt="Construction project 8" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/09.webp" alt="Construction project 9" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/10.webp" alt="Construction project 10" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/11.webp" alt="Construction project 11" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/12.webp" alt="Construction project 12" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/13.webp" alt="Construction project 13" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/14.webp" alt="Construction project 14" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/15.webp" alt="Construction project 15" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/16.webp" alt="Construction project 16" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/17.webp" alt="Construction project 17" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/18.webp" alt="Construction project 18" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/19.webp" alt="Construction project 19" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/20.webp" alt="Construction project 20" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/21.webp" alt="Construction project 21" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/22.webp" alt="Construction project 22" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/23.webp" alt="Construction project 23" decoding="async"><div class="caption"></div></div>
+        <div class="filmstrip-item"><img src="media/projects/kitchen_remodels/24.webp" alt="Construction project 24" decoding="async"><div class="caption"></div></div>
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX OVERLAY -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lightbox-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+    <button class="lightbox-nav lb-next" id="lbNext" aria-label="Next">›</button>
+    <img id="lbImg" src="" alt="Project photo">
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -968,108 +549,76 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* ─── 1. KITCHEN SLIDESHOW ─── */
-    let kitchenIndex = 0;
-    const kitchenSlides = document.querySelectorAll('#kitchenTrack .slideshow-slide');
-    const kitchenTrack = document.getElementById('kitchenTrack');
-    const kitchenDotsContainer = document.getElementById('kitchenDots');
+    /* ─── LIGHTBOX ─── */
+    const lbOverlay = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const allFilmstripImgs = Array.from(document.querySelectorAll('.filmstrip-item img'));
+    let lbIndex = 0;
+    let lbList = allFilmstripImgs;
 
-    // Build dots
-    kitchenSlides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
-      dot.onclick = () => goToKitchenSlide(i);
-      kitchenDotsContainer.appendChild(dot);
+    // Click any filmstrip image to open lightbox
+    document.querySelectorAll('.filmstrip-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        // Build list from the same filmstrip (same section)
+        const filmstrip = item.closest('.filmstrip');
+        lbList = Array.from(filmstrip.querySelectorAll('.filmstrip-item img'));
+        lbIndex = lbList.indexOf(img);
+        openLightbox();
+      });
     });
 
-    function goToKitchenSlide(i) {
-      kitchenIndex = i;
-      kitchenTrack.style.transform = `translateX(-${i * 100}%)`;
-      document.querySelectorAll('#kitchenDots .slideshow-dot').forEach((d, j) => {
-        d.classList.toggle('active', j === i);
-      });
-    }
-
-    function slideKitchen(dir) {
-      let next = kitchenIndex + dir;
-      if (next < 0) next = kitchenSlides.length - 1;
-      if (next >= kitchenSlides.length) next = 0;
-      goToKitchenSlide(next);
-    }
-
-    // Auto-advance every 5s
-    setInterval(() => slideKitchen(1), 5000);
-
-    /* ─── 3. FULL HOME LIGHTBOX ─── */
-    const lightboxMedia = [
-      { type: 'img', src: 'media/projects/kitchen_remodels/01.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/02.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/03.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/04.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/05.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/06.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/07.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/08.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/09.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/10.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/11.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/12.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/13.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/14.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/15.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/16.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/17.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/18.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/19.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/20.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/21.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/22.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/23.png' },
-      { type: 'img', src: 'media/projects/kitchen_remodels/24.png' },
-    ];
-    let lbIndex = 0;
-
-    function openLightbox(i) {
-      lbIndex = i;
-      renderLightbox();
-      document.getElementById('lightbox').classList.add('open');
+    function openLightbox() {
+      lbImg.src = lbList[lbIndex].src;
+      lbOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
+      // Trigger fade-in on next frame
+      requestAnimationFrame(() => lbOverlay.classList.add('visible'));
     }
 
     function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-      // Pause any playing video
-      const vid = document.querySelector('#lightboxContent video');
-      if (vid) vid.pause();
+      lbOverlay.classList.remove('visible');
+      setTimeout(() => {
+        lbOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }, 250);
     }
 
     function navLightbox(dir) {
       lbIndex += dir;
-      if (lbIndex < 0) lbIndex = lightboxMedia.length - 1;
-      if (lbIndex >= lightboxMedia.length) lbIndex = 0;
-      renderLightbox();
+      if (lbIndex < 0) lbIndex = lbList.length - 1;
+      if (lbIndex >= lbList.length) lbIndex = 0;
+      lbImg.src = lbList[lbIndex].src;
     }
 
-    function renderLightbox() {
-      const item = lightboxMedia[lbIndex];
-      const container = document.getElementById('lightboxContent');
-      if (item.type === 'video') {
-        container.innerHTML = `<video src="${item.src}" autoplay muted loop playsinline style="max-width:90vw;max-height:85vh;border-radius:8px;"></video>`;
-      } else {
-        container.innerHTML = `<img src="${item.src}" alt="Project photo" style="max-width:90vw;max-height:85vh;border-radius:8px;">`;
-      }
-    }
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', () => navLightbox(-1));
+    document.getElementById('lbNext').addEventListener('click', () => navLightbox(1));
 
-    // Close lightbox on Escape or clicking overlay background
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    // Close on background click
+    lbOverlay.addEventListener('click', (e) => {
+      if (e.target === lbOverlay) closeLightbox();
     });
+
+    // Keyboard: Escape, Left, Right
     document.addEventListener('keydown', (e) => {
+      if (!lbOverlay.classList.contains('open')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') navLightbox(-1);
       if (e.key === 'ArrowRight') navLightbox(1);
     });
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    lbOverlay.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    lbOverlay.addEventListener('touchend', (e) => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        navLightbox(diff > 0 ? -1 : 1);
+      }
+    }, { passive: true });
 
     /* ─── SMOOTH SCROLL TO HASH ON LOAD ─── */
     if (window.location.hash) {
